@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard Mozze Calçados</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 :root { --bg:#0b1120; --card:#1e293b; --accent:#3b82f6; --text:#f1f5f9; --muted:#94a3b8; --border:#334155; }
 * { box-sizing:border-box; margin:0; padding:0; }
@@ -17,8 +16,10 @@ header p { color:var(--muted); font-size:0.95rem; }
 .card { background:var(--card); border-radius:16px; padding:20px; border:1px solid var(--border); }
 .card h2 { font-size:0.95rem; color:var(--muted); margin-bottom:10px; font-weight:600; }
 .big-number { font-size:2.4rem; font-weight:700; line-height:1.1; }
+.big-number.unverified { font-size:1.15rem; font-weight:600; color:var(--muted); line-height:1.3; }
 .sub { color:var(--muted); font-size:0.85rem; margin-top:6px; }
 .chart-container { position:relative; height:260px; margin-top:8px; }
+.chart-fallback { height:100%; display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:1rem; }
 table { width:100%; border-collapse:collapse; font-size:0.9rem; margin-top:8px; }
 th,td { padding:11px 10px; text-align:left; border-bottom:1px solid var(--border); }
 th { color:var(--muted); font-weight:600; }
@@ -31,53 +32,50 @@ footer { text-align:center; margin-top:50px; color:var(--muted); font-size:0.85r
 <header>
   <h1>Mozze Calçados</h1>
   <p>Dashboard Completo · Brasil Atacadista · Joinville/SC</p>
-  <p>Última atualização: <span id="updateTime"></span></p>
+  <p>Última atualização: <span id="updateTime">não verificado</span></p>
 </header>
 
 <h2 class="section-title">Resumo</h2>
 <div class="grid">
-  <div class="card"><h2>Vendas do Dia</h2><div class="big-number">R$ 1.850</div><div class="sub">12 vendas · 18 pares · Ticket R$ 154</div></div>
-  <div class="card"><h2>Meta do Mês</h2><div class="big-number">42%</div><div class="sub">R$ 14.700 / R$ 35.000</div></div>
-  <div class="card"><h2>Estoque Crítico</h2><div class="big-number" style="color:#f59e0b;">7</div></div>
+  <div class="card"><h2>Vendas do Dia</h2><div class="big-number unverified" id="vendasDia">não verificado</div><div class="sub" id="vendasDiaSub">não verificado</div></div>
+  <div class="card"><h2>Meta do Mês</h2><div class="big-number unverified" id="metaPct">não verificado</div><div class="sub" id="metaSub">não verificado</div></div>
+  <div class="card"><h2>Estoque Crítico</h2><div class="big-number unverified" id="estoqueNum">não verificado</div></div>
 </div>
 <div class="grid">
   <div class="card">
     <h2>Vendas <select id="periodSelect" onchange="updateSalesChart()" style="background:#334155;color:#fff;border:none;border-radius:6px;padding:3px 8px;font-size:0.85rem;">
       <option value="dia">Por Dia</option><option value="semana">Por Semana</option><option value="mes">Por Mês</option>
     </select></h2>
-    <div class="chart-container"><canvas id="salesChart"></canvas></div>
+    <div class="chart-container"><p class="chart-fallback" id="salesChartFallback">não verificado</p></div>
   </div>
   <div class="card">
     <h2>Desempenho da Meta</h2>
-    <div class="chart-container"><canvas id="performanceChart"></canvas></div>
+    <div class="chart-container"><p class="chart-fallback" id="performanceChartFallback">não verificado</p></div>
   </div>
 </div>
 <div class="card">
-  <h2>Tendência e Projeção de Vendas (próximos 15 dias)</h2>
-  <div class="chart-container"><canvas id="projectionChart"></canvas></div>
+  <h2>Tendência e Projeção de Vendas</h2>
+  <div class="chart-container"><p class="chart-fallback" id="projectionChartFallback">não verificado</p></div>
 </div>
 
 <h2 class="section-title">Vendas</h2>
 <div class="grid">
-  <div class="card"><h2>Ticket Médio</h2><div class="big-number">R$ 154</div><div class="sub">Meta: R$ 160</div></div>
-  <div class="card"><h2>Pares por Venda</h2><div class="big-number">1,5</div><div class="sub">Média do mês</div></div>
-  <div class="card"><h2>Melhor Dia</h2><div class="big-number">Sábado</div><div class="sub">R$ 3.200</div></div>
+  <div class="card"><h2>Ticket Médio</h2><div class="big-number unverified" id="ticketMedio">não verificado</div><div class="sub" id="ticketMeta">Meta: não verificado</div></div>
+  <div class="card"><h2>Pares por Venda</h2><div class="big-number unverified" id="paresPorVenda">não verificado</div><div class="sub">Média do mês</div></div>
+  <div class="card"><h2>Melhor Dia</h2><div class="big-number unverified" id="melhorDia">não verificado</div><div class="sub" id="melhorDiaSub">não verificado</div></div>
 </div>
 <div class="card">
   <h2>Mais Vendidos da Semana</h2>
   <table>
     <thead><tr><th>Produto</th><th>Pares</th><th>Faturamento</th><th>Margem</th></tr></thead>
     <tbody>
-      <tr><td>Sandália Confort</td><td>28</td><td>R$ 4.200</td><td>48%</td></tr>
-      <tr><td>Tênis Casual</td><td>19</td><td>R$ 3.800</td><td>45%</td></tr>
-      <tr><td>Sapatilha</td><td>15</td><td>R$ 2.250</td><td>42%</td></tr>
-      <tr><td>Bota Cano Curto</td><td>11</td><td>R$ 2.640</td><td>50%</td></tr>
+      <tr><td colspan="4">não verificado</td></tr>
     </tbody>
   </table>
 </div>
 <div class="card">
   <h2>Formas de Pagamento (mês)</h2>
-  <p>Pix: 55% · Cartão: 35% · Dinheiro: 10%</p>
+  <p>não verificado</p>
 </div>
 
 <h2 class="section-title">Estoque</h2>
@@ -86,105 +84,130 @@ footer { text-align:center; margin-top:50px; color:var(--muted); font-size:0.85r
   <table>
     <thead><tr><th>Produto</th><th>Tamanho</th><th>Qtd</th><th>Status</th><th>Ação</th></tr></thead>
     <tbody>
-      <tr><td>Sandália Confort</td><td>37</td><td>1</td><td class="status-low">Baixo</td><td>Repor</td></tr>
-      <tr><td>Tênis Casual</td><td>38</td><td>0</td><td class="status-zero">Zerado</td><td>Urgente</td></tr>
-      <tr><td>Bota Cano Curto</td><td>36</td><td>2</td><td class="status-low">Baixo</td><td>Repor</td></tr>
-      <tr><td>Sapatilha</td><td>35</td><td>0</td><td class="status-zero">Zerado</td><td>Urgente</td></tr>
-      <tr><td>Rasteira</td><td>39</td><td>3</td><td class="status-low">Baixo</td><td>Observar</td></tr>
+      <tr><td colspan="5">não verificado</td></tr>
     </tbody>
   </table>
 </div>
 <div class="card">
   <h2>Consignado</h2>
-  <p><strong>Valor em aberto:</strong> R$ 12.400</p>
-  <p><strong>A acertar com fornecedores:</strong> R$ 3.850</p>
-  <p><strong>Itens consignados:</strong> 86 pares</p>
+  <p><strong>Valor em aberto:</strong> não verificado</p>
+  <p><strong>A acertar com fornecedores:</strong> não verificado</p>
+  <p><strong>Itens consignados:</strong> não verificado</p>
 </div>
 
 <h2 class="section-title">Financeiro</h2>
 <div class="grid">
-  <div class="card"><h2>Caixa Estimado</h2><div class="big-number">R$ 8.420</div></div>
-  <div class="card"><h2>Contas a Pagar (7 dias)</h2><div class="big-number" style="color:#f59e0b;">R$ 3.150</div></div>
-  <div class="card"><h2>Lucro Estimado</h2><div class="big-number" style="color:#10b981;">R$ 6.800</div></div>
+  <div class="card"><h2>Caixa Estimado</h2><div class="big-number unverified" id="caixa">não verificado</div></div>
+  <div class="card"><h2>Contas a Pagar</h2><div class="big-number unverified" id="contasPagar">não verificado</div></div>
+  <div class="card"><h2>Lucro Estimado</h2><div class="big-number unverified" id="lucroEstimado">não verificado</div></div>
 </div>
 <div class="card">
   <h2>Resumo Financeiro do Mês</h2>
   <table>
-    <tr><td>Faturamento bruto</td><td>R$ 28.400</td></tr>
-    <tr><td>Custo da mercadoria</td><td>R$ 16.100</td></tr>
-    <tr><td>Despesas operacionais</td><td>R$ 5.500</td></tr>
-    <tr><td>Impostos estimados</td><td>R$ 1.420</td></tr>
-    <tr><td><strong>Lucro estimado</strong></td><td><strong>R$ 6.800</strong></td></tr>
-    <tr><td>Margem</td><td>23,9%</td></tr>
+    <tr><td>Faturamento bruto</td><td id="finFaturamento">não verificado</td></tr>
+    <tr><td>Custo da mercadoria</td><td id="finCusto">não verificado</td></tr>
+    <tr><td>Despesas operacionais</td><td id="finDespesas">não verificado</td></tr>
+    <tr><td>Impostos estimados</td><td id="finImpostos">não verificado</td></tr>
+    <tr><td><strong>Lucro estimado</strong></td><td><strong id="finLucro">não verificado</strong></td></tr>
+    <tr><td>Margem</td><td id="finMargem">não verificado</td></tr>
   </table>
 </div>
 <div class="card">
   <h2>Ponto de Equilíbrio</h2>
-  <p>Meta: R$ 23.800 · Atingido: R$ 28.400 (+19,3%)</p>
+  <p id="pontoEq">não verificado</p>
 </div>
 
 <footer>Dashboard Mozze Calçados</footer>
 <script>
-document.getElementById("updateTime").textContent = new Date().toLocaleString("pt-BR");
-const salesData = {
-  dia: { labels:["Seg","Ter","Qua","Qui","Sex","Sáb","Dom"], data:[1200,1800,1500,2100,2500,3200,900] },
-  semana: { labels:["Sem 1","Sem 2","Sem 3","Sem 4"], data:[8500,9200,7800,10500] },
-  mes: { labels:["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"], data:[22000,18500,24000,21000,26500,23000,19800,24500,27000,25500,0,0] }
-};
-let salesChart;
-function createSalesChart(period="dia") {
-  const ctx = document.getElementById("salesChart").getContext("2d");
-  if (salesChart) salesChart.destroy();
-  const d = salesData[period];
-  salesChart = new Chart(ctx, {
-    type: "bar",
-    data: { labels: d.labels, datasets: [{ label:"Vendas (R$)", data:d.data, backgroundColor:"#3b82f6", borderRadius:6 }] },
-    options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ y:{beginAtZero:true}, x:{} } }
-  });
+const NAO = "não verificado";
+const brl = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
+const inteiro = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 0 });
+const decimal = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 1 });
+const pctFmt = new Intl.NumberFormat("pt-BR", { minimumFractionDigits: 0, maximumFractionDigits: 1 });
+
+function isNum(v) {
+  return typeof v === "number" && Number.isFinite(v);
 }
-function updateSalesChart() { createSalesChart(document.getElementById("periodSelect").value); }
-createSalesChart("dia");
+function money(v) {
+  return isNum(v) ? brl.format(v) : NAO;
+}
+function count(v) {
+  return isNum(v) ? inteiro.format(v) : NAO;
+}
+function progress(part, total) {
+  if (!isNum(part) || !isNum(total) || total === 0) return null;
+  return (part / total) * 100;
+}
+function pct(part, total) {
+  const value = progress(part, total);
+  return value === null ? NAO : pctFmt.format(value) + "%";
+}
+function setBig(id, text, color) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = text;
+  const missing = text === NAO;
+  el.classList.toggle("unverified", missing);
+  el.style.color = missing ? "" : (color || "");
+}
+function setText(id, text) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = text;
+}
+function render(d) {
+  const atualizacao = typeof d.ultimaAtualizacao === "string" ? d.ultimaAtualizacao.trim() : "";
+  setText("updateTime", atualizacao || NAO);
 
-new Chart(document.getElementById("performanceChart"), {
-  type: "line",
-  data: {
-    labels: ["Dia 1", "Dia 5", "Dia 10", "Dia 15", "Dia 20", "Dia 25", "Dia 30"],
-    datasets: [
-      { label: "Realizado", data: [1200, 4500, 8900, 12500, 14700, 18500, 22000], borderColor: "#3b82f6", tension: 0.3 },
-      { label: "Meta", data: [1167, 5833, 11667, 17500, 23333, 29167, 35000], borderColor: "#10b981", borderDash: [5,5], tension: 0.1 }
-    ]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: { legend: { labels: { color: "#e2e8f0" } } },
-    scales: {
-      y: { beginAtZero: true, ticks: { color: "#94a3b8" }, grid: { color: "#334155" } },
-      x: { ticks: { color: "#94a3b8" }, grid: { display: false } }
-    }
-  }
-});
+  setBig("vendasDia", money(d.vendasDia));
+  const vendasTxt = isNum(d.numVendas) ? count(d.numVendas) + " vendas" : NAO;
+  const paresTxt = isNum(d.pares) ? count(d.pares) + " pares" : NAO;
+  setText("vendasDiaSub", vendasTxt + " · " + paresTxt + " · Ticket " + money(d.ticketMedio));
 
-new Chart(document.getElementById("projectionChart"), {
-  type: "line",
-  data: {
-    labels: ["Hoje", "+3d", "+6d", "+9d", "+12d", "+15d"],
-    datasets: [
-      { label: "Tendência atual", data: [1850, 2100, 1950, 2300, 2500, 2400], borderColor: "#3b82f6", tension: 0.3 },
-      { label: "Projeção otimista", data: [1850, 2400, 2600, 2900, 3200, 3400], borderColor: "#10b981", borderDash: [5,5], tension: 0.3 },
-      { label: "Projeção conservadora", data: [1850, 1700, 1600, 1800, 1900, 1850], borderColor: "#f59e0b", borderDash: [3,3], tension: 0.3 }
-    ]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: { legend: { labels: { color: "#e2e8f0" } } },
-    scales: {
-      y: { beginAtZero: true, ticks: { color: "#94a3b8" }, grid: { color: "#334155" } },
-      x: { ticks: { color: "#94a3b8" }, grid: { display: false } }
-    }
+  setBig("metaPct", pct(d.realizadoMes, d.metaMes));
+  setText("metaSub", money(d.realizadoMes) + " / " + money(d.metaMes));
+
+  setBig("estoqueNum", isNum(d.estoqueCritico) ? count(d.estoqueCritico) : NAO, "#f59e0b");
+
+  setBig("ticketMedio", money(d.ticketMedio));
+  setText("ticketMeta", "Meta: " + NAO);
+
+  let paresVenda = NAO;
+  if (isNum(d.pares) && isNum(d.numVendas) && d.numVendas !== 0) {
+    paresVenda = decimal.format(d.pares / d.numVendas);
   }
-});
+  setBig("paresPorVenda", paresVenda);
+
+  setBig("melhorDia", NAO);
+  setText("melhorDiaSub", NAO);
+
+  setBig("caixa", money(d.caixa));
+  setBig("contasPagar", money(d.contasPagar), "#f59e0b");
+  setBig("lucroEstimado", money(d.lucroEstimado), "#10b981");
+
+  setText("finFaturamento", NAO);
+  setText("finCusto", NAO);
+  setText("finDespesas", NAO);
+  setText("finImpostos", NAO);
+  setText("finLucro", money(d.lucroEstimado));
+  setText("finMargem", NAO);
+
+  const pe = progress(d.realizadoMes, d.pontoEquilibrio);
+  const atingido = money(d.realizadoMes) + (pe === null ? "" : " (" + pctFmt.format(pe) + "%)");
+  setText("pontoEq", "Meta: " + money(d.pontoEquilibrio) + " · Atingido: " + atingido);
+}
+function updateSalesChart() {}
+
+fetch("dados.json", { cache: "no-store" })
+  .then(function (res) {
+    if (!res.ok) throw new Error("dados");
+    return res.json();
+  })
+  .then(function (data) {
+    render(data && typeof data === "object" ? data : {});
+  })
+  .catch(function () {
+    render({});
+  });
 </script>
 </body>
 </html>
