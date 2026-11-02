@@ -17,11 +17,14 @@ header h1 { font-size:2.1rem; background:linear-gradient(90deg,#60a5fa,#34d399);
 .section { display:none; }
 .section.active { display:block; }
 .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; margin-bottom:20px; }
-.card { background:var(--card); border-radius:14px; padding:18px; border:1px solid var(--border); }
+.card { background:var(--card); border-radius:14px; padding:18px; border:1px solid var(--border); margin-bottom:16px; }
 .big-number { font-size:2.2rem; font-weight:700; }
 .chart-container { position:relative; height:240px; }
-table { width:100%; border-collapse:collapse; }
+table { width:100%; border-collapse:collapse; font-size:0.9rem; }
 th,td { padding:10px 8px; text-align:left; border-bottom:1px solid var(--border); }
+th { color:var(--muted); }
+.status-low { color:#f59e0b; font-weight:600; }
+.status-zero { color:#ef4444; font-weight:600; }
 </style>
 </head>
 <body>
@@ -35,8 +38,8 @@ th,td { padding:10px 8px; text-align:left; border-bottom:1px solid var(--border)
   <div class="tab" onclick="showSection('vendas')">Vendas</div>
   <div class="tab" onclick="showSection('estoque')">Estoque</div>
   <div class="tab" onclick="showSection('financeiro')">Financeiro</div>
-  <div class="tab" onclick="showSection('comercial')">Comercial</div>
 </div>
+
 <div id="resumo" class="section active">
   <div class="grid">
     <div class="card"><h2>Vendas do Dia</h2><div class="big-number">R$ 1.850</div><div class="sub">12 vendas · 18 pares · Ticket R$ 154</div></div>
@@ -56,10 +59,76 @@ th,td { padding:10px 8px; text-align:left; border-bottom:1px solid var(--border)
     </div>
   </div>
 </div>
-<div id="vendas" class="section"><div class="card"><h2>Mais Vendidos</h2><p>Sandália Confort · Tênis Casual · Sapatilha</p></div></div>
-<div id="estoque" class="section"><div class="card"><h2>Estoque Crítico</h2><p>Itens baixos e zerados aparecem aqui.</p></div></div>
-<div id="financeiro" class="section"><div class="card"><h2>Financeiro</h2><p>Caixa: R$ 8.420 · Lucro estimado: R$ 6.800</p></div></div>
-<div id="comercial" class="section"><div class="card"><h2>Comercial</h2><p>Clientes para retomar e promoções sugeridas.</p></div></div>
+
+<div id="vendas" class="section">
+  <div class="grid">
+    <div class="card"><h2>Ticket Médio</h2><div class="big-number">R$ 154</div><div class="sub">Meta: R$ 160</div></div>
+    <div class="card"><h2>Pares por Venda</h2><div class="big-number">1,5</div><div class="sub">Média do mês</div></div>
+    <div class="card"><h2>Melhor Dia</h2><div class="big-number">Sábado</div><div class="sub">R$ 3.200</div></div>
+  </div>
+  <div class="card">
+    <h2>Mais Vendidos da Semana</h2>
+    <table>
+      <thead><tr><th>Produto</th><th>Pares</th><th>Faturamento</th><th>Margem</th></tr></thead>
+      <tbody>
+        <tr><td>Sandália Confort</td><td>28</td><td>R$ 4.200</td><td>48%</td></tr>
+        <tr><td>Tênis Casual</td><td>19</td><td>R$ 3.800</td><td>45%</td></tr>
+        <tr><td>Sapatilha</td><td>15</td><td>R$ 2.250</td><td>42%</td></tr>
+        <tr><td>Bota Cano Curto</td><td>11</td><td>R$ 2.640</td><td>50%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <h2>Formas de Pagamento (mês)</h2>
+    <p>Pix: 55% · Cartão: 35% · Dinheiro: 10%</p>
+  </div>
+</div>
+
+<div id="estoque" class="section">
+  <div class="card">
+    <h2>Estoque Crítico</h2>
+    <table>
+      <thead><tr><th>Produto</th><th>Tamanho</th><th>Qtd</th><th>Status</th><th>Ação</th></tr></thead>
+      <tbody>
+        <tr><td>Sandália Confort</td><td>37</td><td>1</td><td class="status-low">Baixo</td><td>Repor</td></tr>
+        <tr><td>Tênis Casual</td><td>38</td><td>0</td><td class="status-zero">Zerado</td><td>Urgente</td></tr>
+        <tr><td>Bota Cano Curto</td><td>36</td><td>2</td><td class="status-low">Baixo</td><td>Repor</td></tr>
+        <tr><td>Sapatilha</td><td>35</td><td>0</td><td class="status-zero">Zerado</td><td>Urgente</td></tr>
+        <tr><td>Rasteira</td><td>39</td><td>3</td><td class="status-low">Baixo</td><td>Observar</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <h2>Consignado</h2>
+    <p><strong>Valor em aberto:</strong> R$ 12.400</p>
+    <p><strong>A acertar com fornecedores:</strong> R$ 3.850</p>
+    <p><strong>Itens consignados:</strong> 86 pares</p>
+  </div>
+</div>
+
+<div id="financeiro" class="section">
+  <div class="grid">
+    <div class="card"><h2>Caixa Estimado</h2><div class="big-number">R$ 8.420</div></div>
+    <div class="card"><h2>Contas a Pagar (7 dias)</h2><div class="big-number" style="color:#f59e0b;">R$ 3.150</div></div>
+    <div class="card"><h2>Lucro Estimado</h2><div class="big-number" style="color:#10b981;">R$ 6.800</div></div>
+  </div>
+  <div class="card">
+    <h2>Resumo Financeiro do Mês</h2>
+    <table>
+      <tr><td>Faturamento bruto</td><td>R$ 28.400</td></tr>
+      <tr><td>Custo da mercadoria</td><td>R$ 16.100</td></tr>
+      <tr><td>Despesas operacionais</td><td>R$ 5.500</td></tr>
+      <tr><td>Impostos estimados</td><td>R$ 1.420</td></tr>
+      <tr><td><strong>Lucro estimado</strong></td><td><strong>R$ 6.800</strong></td></tr>
+      <tr><td>Margem</td><td>23,9%</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h2>Ponto de Equilíbrio</h2>
+    <p>Meta: R$ 23.800 · Atingido: R$ 28.400 (+19,3%)</p>
+  </div>
+</div>
+
 <footer style="text-align:center;margin-top:40px;color:var(--muted);">Dashboard Mozze Calçados</footer>
 <script>
 document.getElementById("updateTime").textContent = new Date().toLocaleString("pt-BR");
@@ -88,14 +157,13 @@ function createSalesChart(period="dia") {
 function updateSalesChart() { createSalesChart(document.getElementById("periodSelect").value); }
 createSalesChart("dia");
 
-// Gráfico de desempenho da meta
 new Chart(document.getElementById("performanceChart"), {
   type: "line",
   data: {
     labels: ["Dia 1", "Dia 5", "Dia 10", "Dia 15", "Dia 20", "Dia 25", "Dia 30"],
     datasets: [
-      { label: "Realizado", data: [1200, 4500, 8900, 12500, 14700, 18500, 22000], borderColor: "#3b82f6", tension: 0.3, fill: false },
-      { label: "Meta", data: [1167, 5833, 11667, 17500, 23333, 29167, 35000], borderColor: "#10b981", borderDash: [5,5], tension: 0.1, fill: false }
+      { label: "Realizado", data: [1200, 4500, 8900, 12500, 14700, 18500, 22000], borderColor: "#3b82f6", tension: 0.3 },
+      { label: "Meta", data: [1167, 5833, 11667, 17500, 23333, 29167, 35000], borderColor: "#10b981", borderDash: [5,5], tension: 0.1 }
     ]
   },
   options: {
