@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Mozze Calçados</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+:root { --bg:#0b1120; --card:#1e293b; --accent:#3b82f6; --text:#f1f5f9; --muted:#94a3b8; --border:#334155; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:system-ui,sans-serif; background:var(--bg); color:var(--text); padding:16px; }
+header { text-align:center; margin-bottom:24px; }
+header h1 { font-size:2.1rem; background:linear-gradient(90deg,#60a5fa,#34d399); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.tabs { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; justify-content:center; }
+.tab { background:var(--card); border:1px solid var(--border); color:var(--muted); padding:8px 16px; border-radius:999px; cursor:pointer; }
+.tab.active { background:var(--accent); color:white; }
+.section { display:none; }
+.section.active { display:block; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; margin-bottom:20px; }
+.card { background:var(--card); border-radius:14px; padding:18px; border:1px solid var(--border); }
+.big-number { font-size:2.2rem; font-weight:700; }
+.chart-container { position:relative; height:240px; }
+table { width:100%; border-collapse:collapse; }
+th,td { padding:10px 8px; text-align:left; border-bottom:1px solid var(--border); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Mozze Calçados</h1>
+  <p>Dashboard Completo · Brasil Atacadista · Joinville/SC</p>
+  <p>Última atualização: <span id="updateTime"></span></p>
+</header>
+<div class="tabs">
+  <div class="tab active" onclick="showSection('resumo')">Resumo</div>
+  <div class="tab" onclick="showSection('vendas')">Vendas</div>
+  <div class="tab" onclick="showSection('estoque')">Estoque</div>
+  <div class="tab" onclick="showSection('financeiro')">Financeiro</div>
+  <div class="tab" onclick="showSection('comercial')">Comercial</div>
+</div>
+<div id="resumo" class="section active">
+  <div class="grid">
+    <div class="card"><h2>Vendas do Dia</h2><div class="big-number">R$ 1.850</div><div class="sub">12 vendas · 18 pares · Ticket R$ 154</div></div>
+    <div class="card"><h2>Meta do Mês</h2><div class="big-number">42%</div><div class="sub">R$ 14.700 / R$ 35.000</div></div>
+    <div class="card"><h2>Estoque Crítico</h2><div class="big-number" style="color:#f59e0b;">7</div></div>
+  </div>
+  <div class="card">
+    <h2>Vendas <select id="periodSelect" onchange="updateSalesChart()" style="background:#334155;color:#fff;border:none;border-radius:6px;padding:4px;">
+      <option value="dia">Por Dia</option><option value="semana">Por Semana</option><option value="mes">Por Mês</option>
+    </select></h2>
+    <div class="chart-container"><canvas id="salesChart"></canvas></div>
+  </div>
+</div>
+<div id="vendas" class="section"><div class="card"><h2>Mais Vendidos</h2><p>Sandália Confort · Tênis Casual · Sapatilha</p></div></div>
+<div id="estoque" class="section"><div class="card"><h2>Estoque Crítico</h2><p>Itens baixos e zerados aparecem aqui.</p></div></div>
+<div id="financeiro" class="section"><div class="card"><h2>Financeiro</h2><p>Caixa: R$ 8.420 · Lucro estimado: R$ 6.800</p></div></div>
+<div id="comercial" class="section"><div class="card"><h2>Comercial</h2><p>Clientes para retomar e promoções sugeridas.</p></div></div>
+<footer style="text-align:center;margin-top:40px;color:var(--muted);">Dashboard Mozze Calçados</footer>
+<script>
+document.getElementById("updateTime").textContent = new Date().toLocaleString("pt-BR");
+function showSection(id) {
+  document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  event.target.classList.add("active");
+}
+const salesData = {
+  dia: { labels:["Seg","Ter","Qua","Qui","Sex","Sáb","Dom"], data:[1200,1800,1500,2100,2500,3200,900] },
+  semana: { labels:["Sem 1","Sem 2","Sem 3","Sem 4"], data:[8500,9200,7800,10500] },
+  mes: { labels:["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"], data:[22000,18500,24000,21000,26500,23000,19800,24500,27000,25500,0,0] }
+};
+let salesChart;
+function createSalesChart(period="dia") {
+  const ctx = document.getElementById("salesChart").getContext("2d");
+  if (salesChart) salesChart.destroy();
+  const d = salesData[period];
+  salesChart = new Chart(ctx, {
+    type: "bar",
+    data: { labels: d.labels, datasets: [{ label:"Vendas (R$)", data:d.data, backgroundColor:"#3b82f6", borderRadius:6 }] },
+    options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ y:{beginAtZero:true}, x:{} } }
+  });
+}
+function updateSalesChart() { createSalesChart(document.getElementById("periodSelect").value); }
+createSalesChart("dia");
+</script>
+</body>
+</html>
