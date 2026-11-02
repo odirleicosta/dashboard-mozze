@@ -8,14 +8,10 @@
 <style>
 :root { --bg:#0b1120; --card:#1e293b; --accent:#3b82f6; --text:#f1f5f9; --muted:#94a3b8; --border:#334155; }
 * { box-sizing:border-box; margin:0; padding:0; }
-body { font-family:system-ui,sans-serif; background:var(--bg); color:var(--text); padding:16px; }
+body { font-family:system-ui,sans-serif; background:var(--bg); color:var(--text); padding:16px; max-width:1200px; margin:0 auto; }
 header { text-align:center; margin-bottom:24px; }
 header h1 { font-size:2.1rem; background:linear-gradient(90deg,#60a5fa,#34d399); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.tabs { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; justify-content:center; }
-.tab { background:var(--card); border:1px solid var(--border); color:var(--muted); padding:8px 16px; border-radius:999px; cursor:pointer; }
-.tab.active { background:var(--accent); color:white; }
-.section { display:none; }
-.section.active { display:block; }
+.section-title { font-size:1.4rem; margin:32px 0 16px; color:#60a5fa; border-bottom:1px solid var(--border); padding-bottom:8px; }
 .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; margin-bottom:20px; }
 .card { background:var(--card); border-radius:14px; padding:18px; border:1px solid var(--border); margin-bottom:16px; }
 .big-number { font-size:2.2rem; font-weight:700; }
@@ -33,115 +29,99 @@ th { color:var(--muted); }
   <p>Dashboard Completo · Brasil Atacadista · Joinville/SC</p>
   <p>Última atualização: <span id="updateTime"></span></p>
 </header>
-<div class="tabs">
-  <div class="tab active" onclick="showSection('resumo')">Resumo</div>
-  <div class="tab" onclick="showSection('vendas')">Vendas</div>
-  <div class="tab" onclick="showSection('estoque')">Estoque</div>
-  <div class="tab" onclick="showSection('financeiro')">Financeiro</div>
-</div>
 
-<div id="resumo" class="section active">
-  <div class="grid">
-    <div class="card"><h2>Vendas do Dia</h2><div class="big-number">R$ 1.850</div><div class="sub">12 vendas · 18 pares · Ticket R$ 154</div></div>
-    <div class="card"><h2>Meta do Mês</h2><div class="big-number">42%</div><div class="sub">R$ 14.700 / R$ 35.000</div></div>
-    <div class="card"><h2>Estoque Crítico</h2><div class="big-number" style="color:#f59e0b;">7</div></div>
-  </div>
-  <div class="grid">
-    <div class="card">
-      <h2>Vendas <select id="periodSelect" onchange="updateSalesChart()" style="background:#334155;color:#fff;border:none;border-radius:6px;padding:4px;">
-        <option value="dia">Por Dia</option><option value="semana">Por Semana</option><option value="mes">Por Mês</option>
-      </select></h2>
-      <div class="chart-container"><canvas id="salesChart"></canvas></div>
-    </div>
-    <div class="card">
-      <h2>Desempenho da Meta</h2>
-      <div class="chart-container"><canvas id="performanceChart"></canvas></div>
-    </div>
+<h2 class="section-title">Resumo</h2>
+<div class="grid">
+  <div class="card"><h2>Vendas do Dia</h2><div class="big-number">R$ 1.850</div><div class="sub">12 vendas · 18 pares · Ticket R$ 154</div></div>
+  <div class="card"><h2>Meta do Mês</h2><div class="big-number">42%</div><div class="sub">R$ 14.700 / R$ 35.000</div></div>
+  <div class="card"><h2>Estoque Crítico</h2><div class="big-number" style="color:#f59e0b;">7</div></div>
+</div>
+<div class="grid">
+  <div class="card">
+    <h2>Vendas <select id="periodSelect" onchange="updateSalesChart()" style="background:#334155;color:#fff;border:none;border-radius:6px;padding:4px;">
+      <option value="dia">Por Dia</option><option value="semana">Por Semana</option><option value="mes">Por Mês</option>
+    </select></h2>
+    <div class="chart-container"><canvas id="salesChart"></canvas></div>
   </div>
   <div class="card">
-    <h2>Tendência e Projeção de Vendas (próximos 15 dias)</h2>
-    <div class="chart-container"><canvas id="projectionChart"></canvas></div>
+    <h2>Desempenho da Meta</h2>
+    <div class="chart-container"><canvas id="performanceChart"></canvas></div>
   </div>
 </div>
-
-<div id="vendas" class="section">
-  <div class="grid">
-    <div class="card"><h2>Ticket Médio</h2><div class="big-number">R$ 154</div><div class="sub">Meta: R$ 160</div></div>
-    <div class="card"><h2>Pares por Venda</h2><div class="big-number">1,5</div><div class="sub">Média do mês</div></div>
-    <div class="card"><h2>Melhor Dia</h2><div class="big-number">Sábado</div><div class="sub">R$ 3.200</div></div>
-  </div>
-  <div class="card">
-    <h2>Mais Vendidos da Semana</h2>
-    <table>
-      <thead><tr><th>Produto</th><th>Pares</th><th>Faturamento</th><th>Margem</th></tr></thead>
-      <tbody>
-        <tr><td>Sandália Confort</td><td>28</td><td>R$ 4.200</td><td>48%</td></tr>
-        <tr><td>Tênis Casual</td><td>19</td><td>R$ 3.800</td><td>45%</td></tr>
-        <tr><td>Sapatilha</td><td>15</td><td>R$ 2.250</td><td>42%</td></tr>
-        <tr><td>Bota Cano Curto</td><td>11</td><td>R$ 2.640</td><td>50%</td></tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="card">
-    <h2>Formas de Pagamento (mês)</h2>
-    <p>Pix: 55% · Cartão: 35% · Dinheiro: 10%</p>
-  </div>
+<div class="card">
+  <h2>Tendência e Projeção de Vendas (próximos 15 dias)</h2>
+  <div class="chart-container"><canvas id="projectionChart"></canvas></div>
 </div>
 
-<div id="estoque" class="section">
-  <div class="card">
-    <h2>Estoque Crítico</h2>
-    <table>
-      <thead><tr><th>Produto</th><th>Tamanho</th><th>Qtd</th><th>Status</th><th>Ação</th></tr></thead>
-      <tbody>
-        <tr><td>Sandália Confort</td><td>37</td><td>1</td><td class="status-low">Baixo</td><td>Repor</td></tr>
-        <tr><td>Tênis Casual</td><td>38</td><td>0</td><td class="status-zero">Zerado</td><td>Urgente</td></tr>
-        <tr><td>Bota Cano Curto</td><td>36</td><td>2</td><td class="status-low">Baixo</td><td>Repor</td></tr>
-        <tr><td>Sapatilha</td><td>35</td><td>0</td><td class="status-zero">Zerado</td><td>Urgente</td></tr>
-        <tr><td>Rasteira</td><td>39</td><td>3</td><td class="status-low">Baixo</td><td>Observar</td></tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="card">
-    <h2>Consignado</h2>
-    <p><strong>Valor em aberto:</strong> R$ 12.400</p>
-    <p><strong>A acertar com fornecedores:</strong> R$ 3.850</p>
-    <p><strong>Itens consignados:</strong> 86 pares</p>
-  </div>
+<h2 class="section-title">Vendas</h2>
+<div class="grid">
+  <div class="card"><h2>Ticket Médio</h2><div class="big-number">R$ 154</div><div class="sub">Meta: R$ 160</div></div>
+  <div class="card"><h2>Pares por Venda</h2><div class="big-number">1,5</div><div class="sub">Média do mês</div></div>
+  <div class="card"><h2>Melhor Dia</h2><div class="big-number">Sábado</div><div class="sub">R$ 3.200</div></div>
+</div>
+<div class="card">
+  <h2>Mais Vendidos da Semana</h2>
+  <table>
+    <thead><tr><th>Produto</th><th>Pares</th><th>Faturamento</th><th>Margem</th></tr></thead>
+    <tbody>
+      <tr><td>Sandália Confort</td><td>28</td><td>R$ 4.200</td><td>48%</td></tr>
+      <tr><td>Tênis Casual</td><td>19</td><td>R$ 3.800</td><td>45%</td></tr>
+      <tr><td>Sapatilha</td><td>15</td><td>R$ 2.250</td><td>42%</td></tr>
+      <tr><td>Bota Cano Curto</td><td>11</td><td>R$ 2.640</td><td>50%</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="card">
+  <h2>Formas de Pagamento (mês)</h2>
+  <p>Pix: 55% · Cartão: 35% · Dinheiro: 10%</p>
 </div>
 
-<div id="financeiro" class="section">
-  <div class="grid">
-    <div class="card"><h2>Caixa Estimado</h2><div class="big-number">R$ 8.420</div></div>
-    <div class="card"><h2>Contas a Pagar (7 dias)</h2><div class="big-number" style="color:#f59e0b;">R$ 3.150</div></div>
-    <div class="card"><h2>Lucro Estimado</h2><div class="big-number" style="color:#10b981;">R$ 6.800</div></div>
-  </div>
-  <div class="card">
-    <h2>Resumo Financeiro do Mês</h2>
-    <table>
-      <tr><td>Faturamento bruto</td><td>R$ 28.400</td></tr>
-      <tr><td>Custo da mercadoria</td><td>R$ 16.100</td></tr>
-      <tr><td>Despesas operacionais</td><td>R$ 5.500</td></tr>
-      <tr><td>Impostos estimados</td><td>R$ 1.420</td></tr>
-      <tr><td><strong>Lucro estimado</strong></td><td><strong>R$ 6.800</strong></td></tr>
-      <tr><td>Margem</td><td>23,9%</td></tr>
-    </table>
-  </div>
-  <div class="card">
-    <h2>Ponto de Equilíbrio</h2>
-    <p>Meta: R$ 23.800 · Atingido: R$ 28.400 (+19,3%)</p>
-  </div>
+<h2 class="section-title">Estoque</h2>
+<div class="card">
+  <h2>Estoque Crítico</h2>
+  <table>
+    <thead><tr><th>Produto</th><th>Tamanho</th><th>Qtd</th><th>Status</th><th>Ação</th></tr></thead>
+    <tbody>
+      <tr><td>Sandália Confort</td><td>37</td><td>1</td><td class="status-low">Baixo</td><td>Repor</td></tr>
+      <tr><td>Tênis Casual</td><td>38</td><td>0</td><td class="status-zero">Zerado</td><td>Urgente</td></tr>
+      <tr><td>Bota Cano Curto</td><td>36</td><td>2</td><td class="status-low">Baixo</td><td>Repor</td></tr>
+      <tr><td>Sapatilha</td><td>35</td><td>0</td><td class="status-zero">Zerado</td><td>Urgente</td></tr>
+      <tr><td>Rasteira</td><td>39</td><td>3</td><td class="status-low">Baixo</td><td>Observar</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="card">
+  <h2>Consignado</h2>
+  <p><strong>Valor em aberto:</strong> R$ 12.400</p>
+  <p><strong>A acertar com fornecedores:</strong> R$ 3.850</p>
+  <p><strong>Itens consignados:</strong> 86 pares</p>
+</div>
+
+<h2 class="section-title">Financeiro</h2>
+<div class="grid">
+  <div class="card"><h2>Caixa Estimado</h2><div class="big-number">R$ 8.420</div></div>
+  <div class="card"><h2>Contas a Pagar (7 dias)</h2><div class="big-number" style="color:#f59e0b;">R$ 3.150</div></div>
+  <div class="card"><h2>Lucro Estimado</h2><div class="big-number" style="color:#10b981;">R$ 6.800</div></div>
+</div>
+<div class="card">
+  <h2>Resumo Financeiro do Mês</h2>
+  <table>
+    <tr><td>Faturamento bruto</td><td>R$ 28.400</td></tr>
+    <tr><td>Custo da mercadoria</td><td>R$ 16.100</td></tr>
+    <tr><td>Despesas operacionais</td><td>R$ 5.500</td></tr>
+    <tr><td>Impostos estimados</td><td>R$ 1.420</td></tr>
+    <tr><td><strong>Lucro estimado</strong></td><td><strong>R$ 6.800</strong></td></tr>
+    <tr><td>Margem</td><td>23,9%</td></tr>
+  </table>
+</div>
+<div class="card">
+  <h2>Ponto de Equilíbrio</h2>
+  <p>Meta: R$ 23.800 · Atingido: R$ 28.400 (+19,3%)</p>
 </div>
 
 <footer style="text-align:center;margin-top:40px;color:var(--muted);">Dashboard Mozze Calçados</footer>
 <script>
 document.getElementById("updateTime").textContent = new Date().toLocaleString("pt-BR");
-function showSection(id) {
-  document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
-  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-  event.target.classList.add("active");
-}
 const salesData = {
   dia: { labels:["Seg","Ter","Qua","Qui","Sex","Sáb","Dom"], data:[1200,1800,1500,2100,2500,3200,900] },
   semana: { labels:["Sem 1","Sem 2","Sem 3","Sem 4"], data:[8500,9200,7800,10500] },
@@ -181,35 +161,14 @@ new Chart(document.getElementById("performanceChart"), {
   }
 });
 
-// Gráfico de tendência e projeção
 new Chart(document.getElementById("projectionChart"), {
   type: "line",
   data: {
     labels: ["Hoje", "+3d", "+6d", "+9d", "+12d", "+15d"],
     datasets: [
-      {
-        label: "Tendência atual",
-        data: [1850, 2100, 1950, 2300, 2500, 2400],
-        borderColor: "#3b82f6",
-        tension: 0.3,
-        fill: false
-      },
-      {
-        label: "Projeção otimista",
-        data: [1850, 2400, 2600, 2900, 3200, 3400],
-        borderColor: "#10b981",
-        borderDash: [5, 5],
-        tension: 0.3,
-        fill: false
-      },
-      {
-        label: "Projeção conservadora",
-        data: [1850, 1700, 1600, 1800, 1900, 1850],
-        borderColor: "#f59e0b",
-        borderDash: [3, 3],
-        tension: 0.3,
-        fill: false
-      }
+      { label: "Tendência atual", data: [1850, 2100, 1950, 2300, 2500, 2400], borderColor: "#3b82f6", tension: 0.3 },
+      { label: "Projeção otimista", data: [1850, 2400, 2600, 2900, 3200, 3400], borderColor: "#10b981", borderDash: [5,5], tension: 0.3 },
+      { label: "Projeção conservadora", data: [1850, 1700, 1600, 1800, 1900, 1850], borderColor: "#f59e0b", borderDash: [3,3], tension: 0.3 }
     ]
   },
   options: {
