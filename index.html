@@ -58,6 +58,10 @@ th { color:var(--muted); }
       <div class="chart-container"><canvas id="performanceChart"></canvas></div>
     </div>
   </div>
+  <div class="card">
+    <h2>Tendência e Projeção de Vendas (próximos 15 dias)</h2>
+    <div class="chart-container"><canvas id="projectionChart"></canvas></div>
+  </div>
 </div>
 
 <div id="vendas" class="section">
@@ -164,6 +168,48 @@ new Chart(document.getElementById("performanceChart"), {
     datasets: [
       { label: "Realizado", data: [1200, 4500, 8900, 12500, 14700, 18500, 22000], borderColor: "#3b82f6", tension: 0.3 },
       { label: "Meta", data: [1167, 5833, 11667, 17500, 23333, 29167, 35000], borderColor: "#10b981", borderDash: [5,5], tension: 0.1 }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { labels: { color: "#e2e8f0" } } },
+    scales: {
+      y: { beginAtZero: true, ticks: { color: "#94a3b8" }, grid: { color: "#334155" } },
+      x: { ticks: { color: "#94a3b8" }, grid: { display: false } }
+    }
+  }
+});
+
+// Gráfico de tendência e projeção
+new Chart(document.getElementById("projectionChart"), {
+  type: "line",
+  data: {
+    labels: ["Hoje", "+3d", "+6d", "+9d", "+12d", "+15d"],
+    datasets: [
+      {
+        label: "Tendência atual",
+        data: [1850, 2100, 1950, 2300, 2500, 2400],
+        borderColor: "#3b82f6",
+        tension: 0.3,
+        fill: false
+      },
+      {
+        label: "Projeção otimista",
+        data: [1850, 2400, 2600, 2900, 3200, 3400],
+        borderColor: "#10b981",
+        borderDash: [5, 5],
+        tension: 0.3,
+        fill: false
+      },
+      {
+        label: "Projeção conservadora",
+        data: [1850, 1700, 1600, 1800, 1900, 1850],
+        borderColor: "#f59e0b",
+        borderDash: [3, 3],
+        tension: 0.3,
+        fill: false
+      }
     ]
   },
   options: {
