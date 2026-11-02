@@ -8,19 +8,23 @@
 <style>
 :root { --bg:#0b1120; --card:#1e293b; --accent:#3b82f6; --text:#f1f5f9; --muted:#94a3b8; --border:#334155; }
 * { box-sizing:border-box; margin:0; padding:0; }
-body { font-family:system-ui,sans-serif; background:var(--bg); color:var(--text); padding:16px; max-width:1200px; margin:0 auto; }
-header { text-align:center; margin-bottom:24px; }
-header h1 { font-size:2.1rem; background:linear-gradient(90deg,#60a5fa,#34d399); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.section-title { font-size:1.4rem; margin:32px 0 16px; color:#60a5fa; border-bottom:1px solid var(--border); padding-bottom:8px; }
-.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; margin-bottom:20px; }
-.card { background:var(--card); border-radius:14px; padding:18px; border:1px solid var(--border); margin-bottom:16px; }
-.big-number { font-size:2.2rem; font-weight:700; }
-.chart-container { position:relative; height:240px; }
-table { width:100%; border-collapse:collapse; font-size:0.9rem; }
-th,td { padding:10px 8px; text-align:left; border-bottom:1px solid var(--border); }
-th { color:var(--muted); }
+body { font-family:system-ui,sans-serif; background:var(--bg); color:var(--text); padding:20px 16px; max-width:1100px; margin:0 auto; }
+header { text-align:center; margin-bottom:32px; }
+header h1 { font-size:2.3rem; background:linear-gradient(90deg,#60a5fa,#34d399); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:6px; }
+header p { color:var(--muted); font-size:0.95rem; }
+.section-title { font-size:1.35rem; margin:40px 0 16px; color:#60a5fa; border-bottom:2px solid var(--border); padding-bottom:8px; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; margin-bottom:24px; }
+.card { background:var(--card); border-radius:16px; padding:20px; border:1px solid var(--border); }
+.card h2 { font-size:0.95rem; color:var(--muted); margin-bottom:10px; font-weight:600; }
+.big-number { font-size:2.4rem; font-weight:700; line-height:1.1; }
+.sub { color:var(--muted); font-size:0.85rem; margin-top:6px; }
+.chart-container { position:relative; height:260px; margin-top:8px; }
+table { width:100%; border-collapse:collapse; font-size:0.9rem; margin-top:8px; }
+th,td { padding:11px 10px; text-align:left; border-bottom:1px solid var(--border); }
+th { color:var(--muted); font-weight:600; }
 .status-low { color:#f59e0b; font-weight:600; }
 .status-zero { color:#ef4444; font-weight:600; }
+footer { text-align:center; margin-top:50px; color:var(--muted); font-size:0.85rem; }
 </style>
 </head>
 <body>
@@ -38,7 +42,7 @@ th { color:var(--muted); }
 </div>
 <div class="grid">
   <div class="card">
-    <h2>Vendas <select id="periodSelect" onchange="updateSalesChart()" style="background:#334155;color:#fff;border:none;border-radius:6px;padding:4px;">
+    <h2>Vendas <select id="periodSelect" onchange="updateSalesChart()" style="background:#334155;color:#fff;border:none;border-radius:6px;padding:3px 8px;font-size:0.85rem;">
       <option value="dia">Por Dia</option><option value="semana">Por Semana</option><option value="mes">Por Mês</option>
     </select></h2>
     <div class="chart-container"><canvas id="salesChart"></canvas></div>
@@ -119,7 +123,7 @@ th { color:var(--muted); }
   <p>Meta: R$ 23.800 · Atingido: R$ 28.400 (+19,3%)</p>
 </div>
 
-<footer style="text-align:center;margin-top:40px;color:var(--muted);">Dashboard Mozze Calçados</footer>
+<footer>Dashboard Mozze Calçados</footer>
 <script>
 document.getElementById("updateTime").textContent = new Date().toLocaleString("pt-BR");
 const salesData = {
