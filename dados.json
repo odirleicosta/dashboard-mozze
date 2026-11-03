@@ -1,14 +1,14 @@
 {
-  "ultimaAtualizacao": "01/11/2026 23:45",
-  "vendasDia": 399.6,
-  "numVendas": 4,
-  "pares": 4,
-  "ticketMedio": 99.9,
+  "ultimaAtualizacao": "02/11/2026 21:45",
+  "vendasDia": 339.70,
+  "numVendas": 2,
+  "pares": 3,
+  "ticketMedio": 169.85,
   "metaMes": 35000,
-  "realizadoMes": 399.6,
+  "realizadoMes": 739.30,
   "pontoEquilibrio": 24058,
-  "estoqueCritico": null,
+  "estoqueCritico": 36,
   "caixa": 519.6,
-  "contasPagar": 698.9,
-  "lucroEstimado": null
+  "contasPagar": 589.00,
+  "lucroEstimado": -321.62
 }
