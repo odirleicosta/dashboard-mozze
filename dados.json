@@ -1,5 +1,5 @@
 {
-  "ultimaAtualizacao": "02/11/2026 21:45",
+  "ultimaAtualizacao": "02/11/2026 22:30",
   "vendasDia": 339.70,
   "numVendas": 2,
   "pares": 3,
@@ -7,8 +7,48 @@
   "metaMes": 35000,
   "realizadoMes": 739.30,
   "pontoEquilibrio": 24058,
-  "estoqueCritico": 36,
-  "caixa": 519.6,
+  "estoqueCritico": 5,
+  "caixa": 519.60,
   "contasPagar": 589.00,
-  "lucroEstimado": -321.62
+  "lucroEstimado": -321.62,
+  "melhorDia": "28/10",
+  "melhorDiaValor": 1850.00,
+  "ticketMeta": 150.00,
+  "financeiro": {
+    "faturamento": 739.30,
+    "custo": 420.00,
+    "despesas": 580.00,
+    "impostos": 60.92,
+    "lucro": -321.62,
+    "margem": -43.5
+  },
+  "maisVendidos": [
+    {"produto": "Tênis Casual Branco", "pares": 12, "faturamento": 1788.00, "margem": 42},
+    {"produto": "Sandália Feminina Caramelo", "pares": 8, "faturamento": 960.00, "margem": 38},
+    {"produto": "Bota Coturno Preto", "pares": 6, "faturamento": 1140.00, "margem": 35},
+    {"produto": "Sapatilha Nude", "pares": 5, "faturamento": 450.00, "margem": 40}
+  ],
+  "estoqueCriticoItens": [
+    {"produto": "Tênis Running", "tamanho": "40", "qtd": 1, "status": "Crítico", "acao": "Repor"},
+    {"produto": "Bota Feminina", "tamanho": "36", "qtd": 0, "status": "Zerado", "acao": "Urgente"},
+    {"produto": "Chinelo Slide", "tamanho": "42", "qtd": 2, "status": "Baixo", "acao": "Monitorar"},
+    {"produto": "Tênis Casual", "tamanho": "39", "qtd": 1, "status": "Crítico", "acao": "Repor"},
+    {"produto": "Sandália Rasteira", "tamanho": "37", "qtd": 0, "status": "Zerado", "acao": "Urgente"}
+  ],
+  "formasPagamento": [
+    {"forma": "Pix", "valor": 420.00, "pct": 56.8},
+    {"forma": "Cartão Crédito", "valor": 210.00, "pct": 28.4},
+    {"forma": "Dinheiro", "valor": 80.00, "pct": 10.8},
+    {"forma": "Cartão Débito", "valor": 29.30, "pct": 4.0}
+  ],
+  "consignado": {
+    "valorAberto": 2450.00,
+    "aAcertar": 1800.00,
+    "itens": 48
+  },
+  "vendasHistorico": {
+    "dia": [280, 450, 320, 390, 510, 340, 339],
+    "semana": [2100, 2450, 1980, 2680, 2200],
+    "mes": [18500, 22100, 19800, 24500, 739]
+  }
 }
