@@ -4,210 +4,258 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard Mozze Calçados</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
-:root { --bg:#0b1120; --card:#1e293b; --accent:#3b82f6; --text:#f1f5f9; --muted:#94a3b8; --border:#334155; }
+:root { --bg:#0b1120; --card:#1e293b; --accent:#3b82f6; --accent2:#34d399; --text:#f1f5f9; --muted:#94a3b8; --border:#334155; --danger:#ef4444; --warn:#f59e0b; --ok:#10b981; }
 * { box-sizing:border-box; margin:0; padding:0; }
-body { font-family:system-ui,sans-serif; background:var(--bg); color:var(--text); padding:20px 16px; max-width:1100px; margin:0 auto; }
+body { font-family:system-ui,-apple-system,sans-serif; background:var(--bg); color:var(--text); padding:20px 16px; max-width:1200px; margin:0 auto; line-height:1.4; }
 header { text-align:center; margin-bottom:32px; }
-header h1 { font-size:2.3rem; background:linear-gradient(90deg,#60a5fa,#34d399); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:6px; }
+header h1 { font-size:2.4rem; background:linear-gradient(90deg,#60a5fa,#34d399); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:6px; font-weight:800; }
 header p { color:var(--muted); font-size:0.95rem; }
-.section-title { font-size:1.35rem; margin:40px 0 16px; color:#60a5fa; border-bottom:2px solid var(--border); padding-bottom:8px; }
+.section-title { font-size:1.4rem; margin:40px 0 16px; color:#60a5fa; border-bottom:2px solid var(--border); padding-bottom:8px; }
 .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; margin-bottom:24px; }
 .card { background:var(--card); border-radius:16px; padding:20px; border:1px solid var(--border); }
 .card h2 { font-size:0.95rem; color:var(--muted); margin-bottom:10px; font-weight:600; }
-.big-number { font-size:2.4rem; font-weight:700; line-height:1.1; }
-.big-number.unverified { font-size:1.15rem; font-weight:600; color:var(--muted); line-height:1.3; }
+.big-number { font-size:2.3rem; font-weight:700; line-height:1.1; }
 .sub { color:var(--muted); font-size:0.85rem; margin-top:6px; }
+.progress-wrap { background:#334155; border-radius:8px; height:10px; margin-top:10px; overflow:hidden; }
+.progress-bar { height:100%; background:linear-gradient(90deg,#3b82f6,#34d399); border-radius:8px; transition:width .4s; }
 .chart-container { position:relative; height:260px; margin-top:8px; }
-.chart-fallback { height:100%; display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:1rem; }
-table { width:100%; border-collapse:collapse; font-size:0.9rem; margin-top:8px; }
-th,td { padding:11px 10px; text-align:left; border-bottom:1px solid var(--border); }
+table { width:100%; border-collapse:collapse; font-size:0.88rem; margin-top:8px; }
+th,td { padding:10px 8px; text-align:left; border-bottom:1px solid var(--border); }
 th { color:var(--muted); font-weight:600; }
-.status-low { color:#f59e0b; font-weight:600; }
-.status-zero { color:#ef4444; font-weight:600; }
-footer { text-align:center; margin-top:50px; color:var(--muted); font-size:0.85rem; }
+.status-low { color:var(--warn); font-weight:600; }
+.status-zero { color:var(--danger); font-weight:600; }
+.status-ok { color:var(--ok); }
+.badge { display:inline-block; padding:2px 8px; border-radius:12px; font-size:0.75rem; font-weight:600; }
+.badge-crit { background:#ef444420; color:#ef4444; }
+.badge-low { background:#f59e0b20; color:#f59e0b; }
+.badge-zero { background:#ef444430; color:#ef4444; }
+footer { text-align:center; margin-top:50px; color:var(--muted); font-size:0.85rem; padding-bottom:20px; }
+select { background:#334155; color:#fff; border:none; border-radius:6px; padding:4px 8px; font-size:0.85rem; }
 </style>
 </head>
 <body>
 <header>
   <h1>Mozze Calçados</h1>
   <p>Dashboard Completo · Brasil Atacadista · Joinville/SC</p>
-  <p>Última atualização: <span id="updateTime">não verificado</span></p>
+  <p>Última atualização: <span id="updateTime">—</span></p>
 </header>
 
 <h2 class="section-title">Resumo</h2>
 <div class="grid">
-  <div class="card"><h2>Vendas do Dia</h2><div class="big-number unverified" id="vendasDia">não verificado</div><div class="sub" id="vendasDiaSub">não verificado</div></div>
-  <div class="card"><h2>Meta do Mês</h2><div class="big-number unverified" id="metaPct">não verificado</div><div class="sub" id="metaSub">não verificado</div></div>
-  <div class="card"><h2>Estoque Crítico</h2><div class="big-number unverified" id="estoqueNum">não verificado</div></div>
+  <div class="card">
+    <h2>Vendas do Dia</h2>
+    <div class="big-number" id="vendasDia">—</div>
+    <div class="sub" id="vendasDiaSub">—</div>
+  </div>
+  <div class="card">
+    <h2>Meta do Mês</h2>
+    <div class="big-number" id="metaPct">—</div>
+    <div class="sub" id="metaSub">—</div>
+    <div class="progress-wrap"><div class="progress-bar" id="metaBar" style="width:0%"></div></div>
+  </div>
+  <div class="card">
+    <h2>Estoque Crítico</h2>
+    <div class="big-number" id="estoqueNum" style="color:var(--warn)">—</div>
+    <div class="sub">Itens abaixo do mínimo</div>
+  </div>
 </div>
+
 <div class="grid">
   <div class="card">
-    <h2>Vendas <select id="periodSelect" onchange="updateSalesChart()" style="background:#334155;color:#fff;border:none;border-radius:6px;padding:3px 8px;font-size:0.85rem;">
-      <option value="dia">Por Dia</option><option value="semana">Por Semana</option><option value="mes">Por Mês</option>
-    </select></h2>
-    <div class="chart-container"><p class="chart-fallback" id="salesChartFallback">não verificado</p></div>
+    <h2>Vendas <select id="periodSelect"><option value="dia">Por Dia (últimos 7)</option><option value="semana">Por Semana</option><option value="mes">Por Mês</option></select></h2>
+    <div class="chart-container"><canvas id="salesChart"></canvas></div>
   </div>
   <div class="card">
     <h2>Desempenho da Meta</h2>
-    <div class="chart-container"><p class="chart-fallback" id="performanceChartFallback">não verificado</p></div>
+    <div class="chart-container"><canvas id="performanceChart"></canvas></div>
   </div>
 </div>
 <div class="card">
-  <h2>Tendência e Projeção de Vendas</h2>
-  <div class="chart-container"><p class="chart-fallback" id="projectionChartFallback">não verificado</p></div>
+  <h2>Formas de Pagamento (mês)</h2>
+  <div class="chart-container" style="height:220px"><canvas id="paymentChart"></canvas></div>
 </div>
 
 <h2 class="section-title">Vendas</h2>
 <div class="grid">
-  <div class="card"><h2>Ticket Médio</h2><div class="big-number unverified" id="ticketMedio">não verificado</div><div class="sub" id="ticketMeta">Meta: não verificado</div></div>
-  <div class="card"><h2>Pares por Venda</h2><div class="big-number unverified" id="paresPorVenda">não verificado</div><div class="sub">Média do mês</div></div>
-  <div class="card"><h2>Melhor Dia</h2><div class="big-number unverified" id="melhorDia">não verificado</div><div class="sub" id="melhorDiaSub">não verificado</div></div>
+  <div class="card"><h2>Ticket Médio</h2><div class="big-number" id="ticketMedio">—</div><div class="sub" id="ticketMeta">—</div></div>
+  <div class="card"><h2>Pares por Venda</h2><div class="big-number" id="paresPorVenda">—</div><div class="sub">Média do mês</div></div>
+  <div class="card"><h2>Melhor Dia</h2><div class="big-number" id="melhorDia">—</div><div class="sub" id="melhorDiaSub">—</div></div>
 </div>
 <div class="card">
   <h2>Mais Vendidos da Semana</h2>
-  <table>
+  <table id="topTable">
     <thead><tr><th>Produto</th><th>Pares</th><th>Faturamento</th><th>Margem</th></tr></thead>
-    <tbody>
-      <tr><td colspan="4">não verificado</td></tr>
-    </tbody>
+    <tbody></tbody>
   </table>
-</div>
-<div class="card">
-  <h2>Formas de Pagamento (mês)</h2>
-  <p>não verificado</p>
 </div>
 
 <h2 class="section-title">Estoque</h2>
 <div class="card">
   <h2>Estoque Crítico</h2>
-  <table>
+  <table id="stockTable">
     <thead><tr><th>Produto</th><th>Tamanho</th><th>Qtd</th><th>Status</th><th>Ação</th></tr></thead>
-    <tbody>
-      <tr><td colspan="5">não verificado</td></tr>
-    </tbody>
+    <tbody></tbody>
   </table>
 </div>
 <div class="card">
   <h2>Consignado</h2>
-  <p><strong>Valor em aberto:</strong> não verificado</p>
-  <p><strong>A acertar com fornecedores:</strong> não verificado</p>
-  <p><strong>Itens consignados:</strong> não verificado</p>
+  <p><strong>Valor em aberto:</strong> <span id="consValor">—</span></p>
+  <p><strong>A acertar com fornecedores:</strong> <span id="consAcertar">—</span></p>
+  <p><strong>Itens consignados:</strong> <span id="consItens">—</span></p>
 </div>
 
 <h2 class="section-title">Financeiro</h2>
 <div class="grid">
-  <div class="card"><h2>Caixa Estimado</h2><div class="big-number unverified" id="caixa">não verificado</div></div>
-  <div class="card"><h2>Contas a Pagar</h2><div class="big-number unverified" id="contasPagar">não verificado</div></div>
-  <div class="card"><h2>Lucro Estimado</h2><div class="big-number unverified" id="lucroEstimado">não verificado</div></div>
+  <div class="card"><h2>Caixa Estimado</h2><div class="big-number" id="caixa">—</div></div>
+  <div class="card"><h2>Contas a Pagar</h2><div class="big-number" id="contasPagar" style="color:var(--warn)">—</div></div>
+  <div class="card"><h2>Lucro Estimado</h2><div class="big-number" id="lucroEstimado">—</div></div>
 </div>
 <div class="card">
   <h2>Resumo Financeiro do Mês</h2>
   <table>
-    <tr><td>Faturamento bruto</td><td id="finFaturamento">não verificado</td></tr>
-    <tr><td>Custo da mercadoria</td><td id="finCusto">não verificado</td></tr>
-    <tr><td>Despesas operacionais</td><td id="finDespesas">não verificado</td></tr>
-    <tr><td>Impostos estimados</td><td id="finImpostos">não verificado</td></tr>
-    <tr><td><strong>Lucro estimado</strong></td><td><strong id="finLucro">não verificado</strong></td></tr>
-    <tr><td>Margem</td><td id="finMargem">não verificado</td></tr>
+    <tr><td>Faturamento bruto</td><td id="finFaturamento">—</td></tr>
+    <tr><td>Custo da mercadoria</td><td id="finCusto">—</td></tr>
+    <tr><td>Despesas operacionais</td><td id="finDespesas">—</td></tr>
+    <tr><td>Impostos estimados</td><td id="finImpostos">—</td></tr>
+    <tr><td><strong>Lucro estimado</strong></td><td><strong id="finLucro">—</strong></td></tr>
+    <tr><td>Margem</td><td id="finMargem">—</td></tr>
   </table>
 </div>
 <div class="card">
   <h2>Ponto de Equilíbrio</h2>
-  <p id="pontoEq">não verificado</p>
+  <p id="pontoEq">—</p>
+  <div class="progress-wrap"><div class="progress-bar" id="peBar" style="width:0%"></div></div>
 </div>
 
-<footer>Dashboard Mozze Calçados</footer>
+<footer>Dashboard Mozze Calçados · Atualizado automaticamente via dados.json</footer>
+
 <script>
-const NAO = "não verificado";
 const brl = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
-const inteiro = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 0 });
-const decimal = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 1 });
-const pctFmt = new Intl.NumberFormat("pt-BR", { minimumFractionDigits: 0, maximumFractionDigits: 1 });
+const inteiro = new Intl.NumberFormat("pt-BR");
+const pctFmt = new Intl.NumberFormat("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 
-function isNum(v) {
-  return typeof v === "number" && Number.isFinite(v);
-}
-function money(v) {
-  return isNum(v) ? brl.format(v) : NAO;
-}
-function count(v) {
-  return isNum(v) ? inteiro.format(v) : NAO;
-}
-function progress(part, total) {
-  if (!isNum(part) || !isNum(total) || total === 0) return null;
-  return (part / total) * 100;
-}
-function pct(part, total) {
-  const value = progress(part, total);
-  return value === null ? NAO : pctFmt.format(value) + "%";
-}
-function setBig(id, text, color) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.textContent = text;
-  const missing = text === NAO;
-  el.classList.toggle("unverified", missing);
-  el.style.color = missing ? "" : (color || "");
-}
-function setText(id, text) {
-  const el = document.getElementById(id);
-  if (el) el.textContent = text;
-}
+let salesChart, performanceChart, paymentChart;
+
+function isNum(v) { return typeof v === "number" && Number.isFinite(v); }
+function money(v) { return isNum(v) ? brl.format(v) : "—"; }
+function count(v) { return isNum(v) ? inteiro.format(v) : "—"; }
+
 function render(d) {
-  const atualizacao = typeof d.ultimaAtualizacao === "string" ? d.ultimaAtualizacao.trim() : "";
-  setText("updateTime", atualizacao || NAO);
+  document.getElementById("updateTime").textContent = d.ultimaAtualizacao || "—";
 
-  setBig("vendasDia", money(d.vendasDia));
-  const vendasTxt = isNum(d.numVendas) ? count(d.numVendas) + " vendas" : NAO;
-  const paresTxt = isNum(d.pares) ? count(d.pares) + " pares" : NAO;
-  setText("vendasDiaSub", vendasTxt + " · " + paresTxt + " · Ticket " + money(d.ticketMedio));
+  document.getElementById("vendasDia").textContent = money(d.vendasDia);
+  const vendasTxt = isNum(d.numVendas) ? count(d.numVendas) + " vendas" : "—";
+  const paresTxt = isNum(d.pares) ? count(d.pares) + " pares" : "—";
+  document.getElementById("vendasDiaSub").textContent = `${vendasTxt} · ${paresTxt} · Ticket ${money(d.ticketMedio)}`;
 
-  setBig("metaPct", pct(d.realizadoMes, d.metaMes));
-  setText("metaSub", money(d.realizadoMes) + " / " + money(d.metaMes));
+  const metaPctVal = isNum(d.realizadoMes) && isNum(d.metaMes) && d.metaMes > 0 ? (d.realizadoMes / d.metaMes) * 100 : 0;
+  document.getElementById("metaPct").textContent = metaPctVal.toFixed(1) + "%";
+  document.getElementById("metaSub").textContent = `${money(d.realizadoMes)} / ${money(d.metaMes)}`;
+  document.getElementById("metaBar").style.width = Math.min(metaPctVal, 100) + "%";
 
-  setBig("estoqueNum", isNum(d.estoqueCritico) ? count(d.estoqueCritico) : NAO, "#f59e0b");
+  document.getElementById("estoqueNum").textContent = count(d.estoqueCritico);
 
-  setBig("ticketMedio", money(d.ticketMedio));
-  setText("ticketMeta", "Meta: " + NAO);
+  document.getElementById("ticketMedio").textContent = money(d.ticketMedio);
+  document.getElementById("ticketMeta").textContent = "Meta: " + money(d.ticketMeta);
 
-  let paresVenda = NAO;
-  if (isNum(d.pares) && isNum(d.numVendas) && d.numVendas !== 0) {
-    paresVenda = decimal.format(d.pares / d.numVendas);
+  let paresVenda = "—";
+  if (isNum(d.pares) && isNum(d.numVendas) && d.numVendas > 0) {
+    paresVenda = (d.pares / d.numVendas).toFixed(1);
   }
-  setBig("paresPorVenda", paresVenda);
+  document.getElementById("paresPorVenda").textContent = paresVenda;
 
-  setBig("melhorDia", NAO);
-  setText("melhorDiaSub", NAO);
+  document.getElementById("melhorDia").textContent = d.melhorDia || "—";
+  document.getElementById("melhorDiaSub").textContent = money(d.melhorDiaValor);
 
-  setBig("caixa", money(d.caixa));
-  setBig("contasPagar", money(d.contasPagar), "#f59e0b");
-  setBig("lucroEstimado", money(d.lucroEstimado), "#10b981");
+  const topBody = document.querySelector("#topTable tbody");
+  topBody.innerHTML = "";
+  (d.maisVendidos || []).forEach(item => {
+    topBody.innerHTML += `<tr><td>${item.produto}</td><td>${item.pares}</td><td>${money(item.faturamento)}</td><td>${item.margem}%</td></tr>`;
+  });
 
-  setText("finFaturamento", NAO);
-  setText("finCusto", NAO);
-  setText("finDespesas", NAO);
-  setText("finImpostos", NAO);
-  setText("finLucro", money(d.lucroEstimado));
-  setText("finMargem", NAO);
+  const stockBody = document.querySelector("#stockTable tbody");
+  stockBody.innerHTML = "";
+  (d.estoqueCriticoItens || []).forEach(item => {
+    const cls = item.qtd === 0 ? "status-zero" : item.qtd <= 1 ? "status-low" : "";
+    const badge = item.qtd === 0 ? "badge-zero" : "badge-low";
+    stockBody.innerHTML += `<tr><td>${item.produto}</td><td>${item.tamanho}</td><td class="${cls}">${item.qtd}</td><td><span class="badge ${badge}">${item.status}</span></td><td>${item.acao}</td></tr>`;
+  });
 
-  const pe = progress(d.realizadoMes, d.pontoEquilibrio);
-  const atingido = money(d.realizadoMes) + (pe === null ? "" : " (" + pctFmt.format(pe) + "%)");
-  setText("pontoEq", "Meta: " + money(d.pontoEquilibrio) + " · Atingido: " + atingido);
+  document.getElementById("consValor").textContent = money(d.consignado?.valorAberto);
+  document.getElementById("consAcertar").textContent = money(d.consignado?.aAcertar);
+  document.getElementById("consItens").textContent = count(d.consignado?.itens);
+
+  document.getElementById("caixa").textContent = money(d.caixa);
+  document.getElementById("contasPagar").textContent = money(d.contasPagar);
+  const lucroEl = document.getElementById("lucroEstimado");
+  lucroEl.textContent = money(d.lucroEstimado);
+  lucroEl.style.color = (d.lucroEstimado || 0) >= 0 ? "var(--ok)" : "var(--danger)";
+
+  const fin = d.financeiro || {};
+  document.getElementById("finFaturamento").textContent = money(fin.faturamento);
+  document.getElementById("finCusto").textContent = money(fin.custo);
+  document.getElementById("finDespesas").textContent = money(fin.despesas);
+  document.getElementById("finImpostos").textContent = money(fin.impostos);
+  document.getElementById("finLucro").textContent = money(fin.lucro);
+  document.getElementById("finMargem").textContent = (fin.margem || 0).toFixed(1) + "%";
+
+  const pePct = isNum(d.realizadoMes) && isNum(d.pontoEquilibrio) && d.pontoEquilibrio > 0 ? (d.realizadoMes / d.pontoEquilibrio) * 100 : 0;
+  document.getElementById("pontoEq").textContent = `Meta: ${money(d.pontoEquilibrio)} · Atingido: ${money(d.realizadoMes)} (${pePct.toFixed(1)}%)`;
+  document.getElementById("peBar").style.width = Math.min(pePct, 100) + "%";
+
+  updateCharts(d);
 }
-function updateSalesChart() {}
+
+function updateCharts(d) {
+  const period = document.getElementById("periodSelect").value;
+  const hist = d.vendasHistorico || {};
+  const labelsMap = {
+    dia: ["Sáb", "Dom", "Seg", "Ter", "Qua", "Qui", "Sex"],
+    semana: ["Sem 1", "Sem 2", "Sem 3", "Sem 4", "Atual"],
+    mes: ["Jul", "Ago", "Set", "Out", "Nov"]
+  };
+  const data = hist[period] || [];
+  const labels = labelsMap[period] || [];
+
+  if (salesChart) salesChart.destroy();
+  salesChart = new Chart(document.getElementById("salesChart"), {
+    type: "bar",
+    data: { labels, datasets: [{ label: "Vendas (R$)", data, backgroundColor: "#3b82f6", borderRadius: 6 }] },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { color: "#94a3b8" } }, x: { ticks: { color: "#94a3b8" } } } }
+  });
+
+  if (performanceChart) performanceChart.destroy();
+  performanceChart = new Chart(document.getElementById("performanceChart"), {
+    type: "doughnut",
+    data: {
+      labels: ["Realizado", "Restante"],
+      datasets: [{ data: [d.realizadoMes || 0, Math.max(0, (d.metaMes || 0) - (d.realizadoMes || 0))], backgroundColor: ["#34d399", "#334155"], borderWidth: 0 }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, cutout: "70%", plugins: { legend: { position: "bottom", labels: { color: "#f1f5f9" } } } }
+  });
+
+  if (paymentChart) paymentChart.destroy();
+  const pag = d.formasPagamento || [];
+  paymentChart = new Chart(document.getElementById("paymentChart"), {
+    type: "doughnut",
+    data: {
+      labels: pag.map(p => p.forma),
+      datasets: [{ data: pag.map(p => p.valor), backgroundColor: ["#3b82f6", "#34d399", "#f59e0b", "#a78bfa"], borderWidth: 0 }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: "right", labels: { color: "#f1f5f9" } } } }
+  });
+}
+
+document.getElementById("periodSelect").addEventListener("change", () => {
+  fetch("dados.json", { cache: "no-store" }).then(r => r.json()).then(updateCharts).catch(() => {});
+});
 
 fetch("dados.json", { cache: "no-store" })
-  .then(function (res) {
-    if (!res.ok) throw new Error("dados");
-    return res.json();
-  })
-  .then(function (data) {
-    render(data && typeof data === "object" ? data : {});
-  })
-  .catch(function () {
-    render({});
-  });
+  .then(res => res.ok ? res.json() : Promise.reject())
+  .then(data => render(data || {}))
+  .catch(() => render({}));
 </script>
 </body>
 </html>
