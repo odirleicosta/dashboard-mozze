@@ -1,54 +1,51 @@
 {
   "ultimaAtualizacao": "02/11/2026 22:30",
-  "vendasDia": 339.70,
-  "numVendas": 2,
-  "pares": 3,
-  "ticketMedio": 169.85,
+  "vendasDia": 399.60,
+  "numVendas": 4,
+  "pares": 4,
+  "ticketMedio": 99.90,
   "metaMes": 35000,
-  "realizadoMes": 739.30,
+  "realizadoMes": 399.60,
   "pontoEquilibrio": 24058,
-  "estoqueCritico": 5,
+  "estoqueCritico": 8,
   "caixa": 519.60,
   "contasPagar": 589.00,
-  "lucroEstimado": -321.62,
-  "melhorDia": "28/10",
-  "melhorDiaValor": 1850.00,
+  "lucroEstimado": -150.00,
+  "melhorDia": "31/10",
+  "melhorDiaValor": 899.10,
   "ticketMeta": 150.00,
   "financeiro": {
-    "faturamento": 739.30,
-    "custo": 420.00,
-    "despesas": 580.00,
-    "impostos": 60.92,
-    "lucro": -321.62,
-    "margem": -43.5
+    "faturamento": 4606.20,
+    "custo": 2570.66,
+    "despesas": 2000.00,
+    "impostos": 180.00,
+    "lucro": 2035.54,
+    "margem": 44.2
   },
   "maisVendidos": [
-    {"produto": "Tênis Casual Branco", "pares": 12, "faturamento": 1788.00, "margem": 42},
-    {"produto": "Sandália Feminina Caramelo", "pares": 8, "faturamento": 960.00, "margem": 38},
-    {"produto": "Bota Coturno Preto", "pares": 6, "faturamento": 1140.00, "margem": 35},
-    {"produto": "Sapatilha Nude", "pares": 5, "faturamento": 450.00, "margem": 40}
+    {"produto": "Vendas 01/11 (4 pares)", "pares": 4, "faturamento": 399.60, "margem": 40},
+    {"produto": "Dados detalhados de outubro pendentes de exportação", "pares": 0, "faturamento": 0, "margem": 0}
   ],
   "estoqueCriticoItens": [
-    {"produto": "Tênis Running", "tamanho": "40", "qtd": 1, "status": "Crítico", "acao": "Repor"},
-    {"produto": "Bota Feminina", "tamanho": "36", "qtd": 0, "status": "Zerado", "acao": "Urgente"},
-    {"produto": "Chinelo Slide", "tamanho": "42", "qtd": 2, "status": "Baixo", "acao": "Monitorar"},
-    {"produto": "Tênis Casual", "tamanho": "39", "qtd": 1, "status": "Crítico", "acao": "Repor"},
-    {"produto": "Sandália Rasteira", "tamanho": "37", "qtd": 0, "status": "Zerado", "acao": "Urgente"}
+    {"produto": "Bota Dakota D2173 Vieri Preto", "tamanho": "vários", "qtd": 1, "status": "Crítico", "acao": "Repor"},
+    {"produto": "Mule Beira Rio 4323.115 Preto", "tamanho": "vários", "qtd": 1, "status": "Crítico", "acao": "Repor"},
+    {"produto": "Sandália Vizzano 6463.107 Camel", "tamanho": "vários", "qtd": 1, "status": "Crítico", "acao": "Repor"},
+    {"produto": "Sapato Dakota Zebra Branco Preto", "tamanho": "vários", "qtd": 1, "status": "Crítico", "acao": "Repor"},
+    {"produto": "Chinelo Vizzano Feminino Preto", "tamanho": "vários", "qtd": 1, "status": "Crítico", "acao": "Repor"}
   ],
   "formasPagamento": [
-    {"forma": "Pix", "valor": 420.00, "pct": 56.8},
-    {"forma": "Cartão Crédito", "valor": 210.00, "pct": 28.4},
-    {"forma": "Dinheiro", "valor": 80.00, "pct": 10.8},
-    {"forma": "Cartão Débito", "valor": 29.30, "pct": 4.0}
+    {"forma": "Pix", "valor": 69.90, "pct": 17.5},
+    {"forma": "Dinheiro", "valor": 129.90, "pct": 32.5},
+    {"forma": "Débito", "valor": 199.80, "pct": 50.0}
   ],
   "consignado": {
-    "valorAberto": 2450.00,
-    "aAcertar": 1800.00,
-    "itens": 48
+    "valorAberto": 623.00,
+    "aAcertar": 623.00,
+    "itens": 6
   },
   "vendasHistorico": {
-    "dia": [280, 450, 320, 390, 510, 340, 339],
-    "semana": [2100, 2450, 1980, 2680, 2200],
-    "mes": [18500, 22100, 19800, 24500, 739]
+    "dia": [899.10, 399.60],
+    "semana": [4606.20, 399.60],
+    "mes": [4606.20, 399.60]
   }
 }
