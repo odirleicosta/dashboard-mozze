@@ -1,16 +1,16 @@
 {
-  "ultimaAtualizacao": "04/11/2026 21:35",
-  "vendasDia": 509.50,
-  "numVendas": 4,
-  "pares": 5,
-  "ticketMedio": 127.38,
+  "ultimaAtualizacao": "05/11/2026 21:15",
+  "vendasDia": 249.80,
+  "numVendas": 2,
+  "pares": 2,
+  "ticketMedio": 124.90,
   "metaMes": 35000,
-  "realizadoMes": 1318.70,
+  "realizadoMes": 1568.50,
   "pontoEquilibrio": 24058,
-  "estoqueCritico": 8,
-  "caixa": 519.60,
+  "estoqueCritico": 46,
+  "caixa": 169.40,
   "contasPagar": 589,
-  "lucroEstimado": -702.71,
+  "lucroEstimado": -908.11,
   "melhorDia": "31/10",
   "melhorDiaValor": 899.10,
   "ticketMeta": 150.00,
@@ -23,8 +23,8 @@
     "margem": 44.2
   },
   "maisVendidos": [
-    {"produto": "Vendas 01/11 (4 pares)", "pares": 4, "faturamento": 399.60, "margem": 40},
-    {"produto": "Dados detalhados de outubro pendentes de exportação", "pares": 0, "faturamento": 0, "margem": 0}
+    {"produto": "Chinelo Modare Ultraconforto Canela 38 (#85)", "pares": 1, "faturamento": 149.90, "margem": 0},
+    {"produto": "Mocassim Modare 7035.664 Preto 39 (#84)", "pares": 1, "faturamento": 99.90, "margem": 0}
   ],
   "estoqueCriticoItens": [
     {"produto": "Bota Dakota D2173 Vieri Preto", "tamanho": "vários", "qtd": 1, "status": "Crítico", "acao": "Repor"},
@@ -34,9 +34,7 @@
     {"produto": "Chinelo Vizzano Feminino Preto", "tamanho": "vários", "qtd": 1, "status": "Crítico", "acao": "Repor"}
   ],
   "formasPagamento": [
-    {"forma": "Pix", "valor": 69.90, "pct": 17.5},
-    {"forma": "Dinheiro", "valor": 129.90, "pct": 32.5},
-    {"forma": "Débito", "valor": 199.80, "pct": 50.0}
+    {"forma": "Dinheiro", "valor": 249.80, "pct": 100.0}
   ],
   "consignado": {
     "valorAberto": 623.00,
