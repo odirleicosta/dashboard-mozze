@@ -16,7 +16,7 @@
   "ticketMeta": 150.00,
   "financeiro": {
     "faturamento": 8598.60,
-    "custo": 6203.10,
+    "custo": null,
     "despesas": 2000.00,
     "impostos": 180.00,
     "lucro": 215.50,
