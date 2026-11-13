@@ -1,26 +1,26 @@
 {
-  "ultimaAtualizacao": "10/11/2026 21:50",
-  "vendasDia": 1249.30,
-  "numVendas": 3,
-  "pares": 7,
-  "ticketMedio": 416.43,
+  "ultimaAtualizacao": "12/11/2026 21:30",
+  "vendasDia": 1448.90,
+  "numVendas": 9,
+  "pares": 11,
+  "ticketMedio": 160.99,
   "metaMes": 35000,
-  "realizadoMes": 8598.60,
+  "realizadoMes": 10607.00,
   "pontoEquilibrio": 24058,
-  "estoqueCritico": 44,
-  "caixa": 2182.61,
+  "estoqueCritico": 48,
+  "caixa": 2572.31,
   "contasPagar": 589.00,
-  "lucroEstimado": 215.50,
+  "lucroEstimado": 365.99,
   "melhorDia": "07/11",
   "melhorDiaValor": 2383.20,
   "ticketMeta": 150.00,
   "financeiro": {
-    "faturamento": 8598.60,
+    "faturamento": 10607.00,
     "custo": null,
     "despesas": 2000.00,
     "impostos": 180.00,
-    "lucro": 215.50,
-    "margem": 2.5
+    "lucro": 365.99,
+    "margem": 3.5
   },
   "maisVendidos": [
     {"produto": "Mocassim Modare 7035.664 Preto/Avelã", "pares": 7, "faturamento": 0, "margem": 0},
@@ -38,8 +38,9 @@
     {"produto": "Rasteira Moleca Branco Off", "tamanho": "só 34 e 35", "qtd": 2, "status": "Grade furada", "acao": "Avaliar"}
   ],
   "formasPagamento": [
-    {"forma": "Crediário", "valor": 1079.40, "pct": 86.4},
-    {"forma": "Débito", "valor": 169.90, "pct": 13.6}
+    {"forma": "Crédito", "valor": 749.60, "pct": 51.7},
+    {"forma": "Dinheiro", "valor": 389.70, "pct": 26.9},
+    {"forma": "Débito", "valor": 309.60, "pct": 21.4}
   ],
   "consignado": {
     "valorAberto": 623.00,
@@ -47,8 +48,9 @@
     "itens": 6
   },
   "vendasHistorico": {
-    "dia": [399.60, 339.70, 69.90, 509.50, 249.80, 1099.30, 2383.20, 869.20, 1429.10, 1249.30],
-    "semana": [5051.00, 3547.60],
-    "mes": [4606.20, 8598.60]
+    "dia": [399.60, 339.70, 69.90, 509.50, 249.80, 1099.30, 2383.20, 869.20, 1429.10, 1249.30, 559.50, 1448.90],
+    "pares": [4, 3, 1, 5, 2, 7, 18, 8, 8, 7, 5, 11],
+    "semana": [5051.00, 5556.00],
+    "mes": [4606.20, 10607.00]
   }
 }
