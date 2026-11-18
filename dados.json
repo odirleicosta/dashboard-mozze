@@ -1,11 +1,11 @@
 {
-  "ultimaAtualizacao": "16/11/2026",
-  "vendasDia": 699.60,
-  "numVendas": 3,
-  "pares": 4,
-  "ticketMedio": 233.20,
+  "ultimaAtualizacao": "17/11/2026 21:35",
+  "vendasDia": 529.50,
+  "numVendas": 5,
+  "pares": 5,
+  "ticketMedio": 105.90,
   "metaMes": 35000,
-  "realizadoMes": 14350.65,
+  "realizadoMes": 14880.15,
   "pontoEquilibrio": 22858.31,
   "estoqueCritico": 50,
   "caixa": 3891.41,
@@ -15,7 +15,7 @@
   "melhorDiaValor": 2383.20,
   "ticketMeta": 150.00,
   "financeiro": {
-    "faturamento": 14350.65,
+    "faturamento": 14880.15,
     "custo": null,
     "despesas": 2000.00,
     "impostos": 180.00,
@@ -38,8 +38,10 @@
     {"produto": "Rasteira Moleca Branco Off", "tamanho": "só 34 e 35", "qtd": 2, "status": "Grade furada", "acao": "Avaliar"}
   ],
   "formasPagamento": [
-    {"forma": "Dinheiro", "valor": 699.50, "pct": 79.5},
-    {"forma": "Pix", "valor": 179.90, "pct": 20.5}
+    {"forma": "Dinheiro", "valor": 169.90, "pct": 32.1},
+    {"forma": "Crédito", "valor": 169.80, "pct": 32.1},
+    {"forma": "Pix", "valor": 119.90, "pct": 22.6},
+    {"forma": "Débito", "valor": 69.90, "pct": 13.2}
   ],
   "consignado": {
     "valorAberto": 623.00,
@@ -47,9 +49,9 @@
     "itens": 6
   },
   "vendasHistorico": {
-    "dia": [399.60, 339.70, 69.90, 509.50, 249.80, 1099.30, 2383.20, 869.20, 1429.10, 1249.30, 559.50, 1788.70, 879.40, 1488.90, 335.95, 699.60],
-    "pares": [4, 3, 1, 5, 2, 7, 18, 8, 8, 7, 5, 13, 6, 11, 3, 4],
-    "semana": [5051.00, 8264.10, 1035.55],
-    "mes": [4606.20, 14350.65]
+    "dia": [399.60, 339.70, 69.90, 509.50, 249.80, 1099.30, 2383.20, 869.20, 1429.10, 1249.30, 559.50, 1788.70, 879.40, 1488.90, 335.95, 699.60, 529.50],
+    "pares": [4, 3, 1, 5, 2, 7, 18, 8, 8, 7, 5, 13, 6, 11, 3, 4, 5],
+    "semana": [5051.00, 8264.10, 1565.05],
+    "mes": [4606.20, 14880.15]
   }
 }
