@@ -1,25 +1,25 @@
 {
-  "ultimaAtualizacao": "18/11/2026",
-  "vendasDia": 569.40,
-  "numVendas": 4,
-  "pares": 6,
-  "ticketMedio": 142.35,
+  "ultimaAtualizacao": "19/11/2026 21:30",
+  "vendasDia": 889.30,
+  "numVendas": 6,
+  "pares": 7,
+  "ticketMedio": 148.22,
   "metaMes": 35000,
-  "realizadoMes": 15449.55,
-  "pontoEquilibrio": 22953.05,
+  "realizadoMes": 16338.85,
+  "pontoEquilibrio": 23023.90,
   "estoqueCritico": 50,
   "caixa": 4061.31,
   "contasPagar": 589.00,
-  "lucroEstimado": 654.15,
+  "lucroEstimado": 682.97,
   "melhorDia": "07/11",
   "melhorDiaValor": 2383.20,
   "ticketMeta": 150.00,
   "financeiro": {
-    "faturamento": 15449.55,
+    "faturamento": 16338.85,
     "custo": null,
     "despesas": 2000.00,
     "impostos": 180.00,
-    "lucro": 654.15,
+    "lucro": 682.97,
     "margem": 4.2
   },
   "maisVendidos": [
@@ -38,8 +38,9 @@
     {"produto": "Rasteira Moleca Branco Off", "tamanho": "só 34 e 35", "qtd": 2, "status": "Grade furada", "acao": "Avaliar"}
   ],
   "formasPagamento": [
-    {"forma": "Crédito", "valor": 339.70, "pct": 59.7},
-    {"forma": "Débito", "valor": 229.70, "pct": 40.3}
+    {"forma": "Crédito", "valor": 549.70, "pct": 61.8},
+    {"forma": "Pix", "valor": 199.80, "pct": 22.5},
+    {"forma": "Débito", "valor": 139.80, "pct": 15.7}
   ],
   "consignado": {
     "valorAberto": 623.00,
@@ -47,9 +48,9 @@
     "itens": 6
   },
   "vendasHistorico": {
-    "dia": [399.60, 339.70, 69.90, 509.50, 249.80, 1099.30, 2383.20, 869.20, 1429.10, 1249.30, 559.50, 1788.70, 879.40, 1488.90, 335.95, 699.60, 529.50, 569.40],
-    "pares": [4, 3, 1, 5, 2, 7, 18, 8, 8, 7, 5, 13, 6, 11, 3, 4, 5, 6],
-    "semana": [5051.00, 8264.10, 2134.45],
-    "mes": [4606.20, 15449.55]
+    "dia": [399.60, 339.70, 69.90, 509.50, 249.80, 1099.30, 2383.20, 869.20, 1429.10, 1249.30, 559.50, 1788.70, 879.40, 1488.90, 335.95, 699.60, 529.50, 569.40, 889.30],
+    "pares": [4, 3, 1, 5, 2, 6, 18, 8, 8, 7, 5, 13, 6, 11, 3, 4, 5, 6, 7],
+    "semana": [5051.00, 8264.10, 3023.75],
+    "mes": [4606.20, 16338.85]
   }
 }
